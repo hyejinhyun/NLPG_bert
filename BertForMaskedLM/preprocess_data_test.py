@@ -53,59 +53,18 @@ def convert_data_to_context(filepath, dataset):
 
     return context_tokens
 
-'''
-def convert_data_to_context(filepath):
-    DRCD = LoadJson(filepath)
-    tokenizer = BertTokenizer(vocab_file='bert-base-uncased-vocab.txt')
-
-    context_tokens = []
-    context_loss_tokens = []
-    sample = []
-
-    # BertForMaskedLM
-    for data in DRCD["data"]:
-        for paragraph in data["paragraphs"]:
-            context = paragraph["context"]
-            little_context = context[:128]
-            sample.append(little_context)
-
-    for s in sample:
-        c_c = conversion_context(s, tokenizer, context_loss_tokens)
-        # c_c = conversion_context(s, tokenizer, context_tokens, context_loss_tokens)
-        context_tokens.append(c_c)
-
-    return context_tokens
-'''
-# def conversion_context(context, tokenizer, context_tokens, context_loss_tokens):
 def conversion_context(context, tokenizer, context_loss_tokens):
     Mask_id_list = []
     new_word_piece_list = []
     context_tokens=[]
-    '''
-    while len(Mask_id_list) == 0:
-        word_piece_list = tokenizer.tokenize(context)
-        result = TextRank().get_keyword(context)
-        keyword = result[0]
-        random_change_word_piece(tokenizer, word_piece_list, Mask_id_list, keyword, new_word_piece_list)
-        # bert_ids = tokenizer.build_inputs_with_special_tokens(tokenizer.convert_tokens_to_ids(new_word_piece_list))
-        # context_tokens.append(bert_ids)
-        # context_tokens = new_word_piece_list
-    '''
+
     word_piece_list = tokenizer.tokenize(context)
     result = TextRank().get_keyword(context)
     keyword = result[0]
-    
-    # random_change_word_piece(tokenizer, word_piece_list, Mask_id_list, keyword, new_word_piece_list)
 
     context_tokens = random_change_word_piece(tokenizer, word_piece_list, Mask_id_list, keyword, new_word_piece_list)
 
-    # Mask_id_list.clear()
-    # new_word_piece_list.clear()
-    # word_piece_list.clear()
-
     return context_tokens
-
-
 
 
 def random_change_word_piece(tokenizer, word_piece_list, Mask_id_list, k, new_word_piece_list):
