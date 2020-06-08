@@ -421,13 +421,11 @@ class ColaProcessor(DataProcessor):
         continue
       guid = "%s-%s" % (set_type, i)
       if set_type == "test":
-        print(line[0])
-        #text_a = tokenization.convert_to_unicode(line[0])
-        #text_b = tokenization.convert_to_unicode(line[1])
-        print(line[2])
-        print(line[3])
-        text_a = tokenization.convert_to_unicode(line[2])
-        text_b = tokenization.convert_to_unicode(line[3])
+        text_a = tokenization.convert_to_unicode(line[0])
+        text_b = tokenization.convert_to_unicode(line[1])
+
+        #text_a = tokenization.convert_to_unicode(line[2])
+        #text_b = tokenization.convert_to_unicode(line[3])
         label = "0"
       else:
         text_a = tokenization.convert_to_unicode(line[2])
@@ -1032,7 +1030,8 @@ def main(_):
 
     result = estimator.predict(input_fn=predict_input_fn)
 
-    output_predict_file = os.path.join(FLAGS.output_dir, "test_results.tsv")
+    #output_predict_file = os.path.join(FLAGS.output_dir, "test_results.tsv")
+    output_predict_file = os.path.join(FLAGS.output_dir, "test_results2.tsv")
 
 
     with tf.gfile.GFile(output_predict_file, "w") as writer:
